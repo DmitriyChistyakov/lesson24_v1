@@ -1,9 +1,8 @@
 package ru.geekbrains.chat.server;
 
-import java.util.Iterator;
+
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Predicate;
 
 public class AuthenticationService {
     private static final Set<Entry> entries = Set.of(
@@ -42,13 +41,13 @@ public class AuthenticationService {
 
 
 
-    /**Следующий метод был написан  в рамках задания 7 */
-    public Optional<Entry> findEntryByNick(String name) { //метод ищет есть ли клиент с именем
-
-        return entries.stream()
-                .filter(entry -> entry.getName().equals(name))
-//                .findAny(); /**ищет все значения*/
-                .findFirst(); /** ищет первое значение*/
+//    /**Следующий метод был написан  в рамках задания 7 */
+//    public Optional<Entry> findEntryByNick(String name) { //метод ищет есть ли клиент с именем
+//
+//        return entries.stream()
+//                .filter(entry -> entry.getName().equals(name))
+////                .findAny(); /**ищет все значения*/
+//                .findFirst(); /** ищет первое значение*/
 
 
 //        Iterator<Entry> iterator = entries.iterator();
@@ -59,7 +58,7 @@ public class AuthenticationService {
 //            }
 //        }
 //        return Optional.empty();
-    }
+//    }
 
 
 

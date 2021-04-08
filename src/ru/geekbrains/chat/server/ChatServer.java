@@ -15,17 +15,20 @@ public class ChatServer {
     public ChatServer() {
         authenticationService = new AuthenticationService();
         loggedClients = new HashSet<>();
+
         try {
             ServerSocket socket = new ServerSocket(8080);
             System.out.println("Server is running up...");
             while (true) {
                 System.out.println("Waiting for a connection...");
+
                 Socket clientsocket = socket.accept();
                 new ClientHandler(clientsocket, this);
             }
         } catch (IOException e) {
             throw new ChatServerException("Что-то пошло не так....", e);
         }
+
     }
 
     public AuthenticationService getAuthenticationService() {
@@ -43,9 +46,9 @@ public class ChatServer {
         loggedClients.add(clientHandler);
     }
 
-    public void unsubscribe(ClientHandler clientHandler){
-        loggedClients.remove(clientHandler);
-    }
+//    public void unsubscribe(ClientHandler clientHandler){
+//        loggedClients.remove(clientHandler);
+//    }
 
     public void sendMessageToClient(ClientHandler from, String nickTo, String msg) {
         for (ClientHandler o: loggedClients){
@@ -61,7 +64,7 @@ public class ChatServer {
     }
 
 
-    public boolean isLoggedIn(String name){
+    public synchronized boolean isLoggedIn(String name){
 //        Iterator<ClientHandler> iterator = loggedClients.iterator();
 //        while (iterator.hasNext()){
 //            ClientHandler client = iterator.next();

@@ -43,13 +43,15 @@ public class ClientHandler {
     }
 
     private void doAuthentication(ChatServer chatServer) {
-        sendMessage("Привет. Пожалуйста зарегистрируйтесь");
+        int t = 120000;
+        sendMessage(String.format("Привет. Пожалуйста зарегистрируйтесь. %n У Вас есть на это %s секунд...", t/1000 ));
         while (true) {
             try {
                 /**
                  * login pattern
                  * -auth li pi
                  */
+                socket.setSoTimeout(t); // включение таймера
                 String message = in.readUTF();
 
                 if (message.startsWith("-auth")) {
@@ -64,6 +66,7 @@ public class ClientHandler {
                         if (!chatServer.isLoggedIn(credentials.getName())) {
                             name = credentials.getName();
                             chatServer.broadcast(String.format("Пользователь [%s]  вошел в чат ", name));
+                            socket.setSoTimeout(0); // отключение таймера
                             chatServer.subscribe(this);
                             return;
                         } else {
@@ -77,7 +80,8 @@ public class ClientHandler {
                     sendMessage("Не корректные значения аутентификации, введите корректные значения..\n -auth your_login your_pass");
                 }
             } catch (IOException e) {
-//                throw new ChatServerException("Что-то пошло не так при попытке аутентификации...", e);
+                sendMessage("У вас вышло время для регистрации");
+                return;
             }
 
         }

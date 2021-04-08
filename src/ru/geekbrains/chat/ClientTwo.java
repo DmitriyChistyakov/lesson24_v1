@@ -1,9 +1,10 @@
 package ru.geekbrains.chat;
 
-import ru.geekbrains.chat.client.ChatClient;
+
+import ru.geekbrains.chat.client.ChatStarter;
 
 public class ClientTwo {
     public static void main(String[] args) {
-        new ChatClient();
+        ChatStarter.run();
     }
 }
